@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("marissa").password("koala").roles("USER").and().withUser("paul")
+        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("USER").and().withUser("paul")
                 .password("emu").roles("USER");
     }
 
@@ -34,14 +34,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .formLogin().and()
-                .authorizeRequests()
-                .antMatchers("/oauth/check_token", "/oauth/token").permitAll()
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
+//        http
+//                .formLogin().and()
+//                .authorizeRequests()
+//                .antMatchers("/oauth/check_token", "/oauth/token").permitAll()
+//                .and()
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and().csrf().disable();
+
+        http.formLogin().and().authorizeRequests()
+                .anyRequest().authenticated().and().httpBasic().disable().csrf().disable();
     }
 
     @Override

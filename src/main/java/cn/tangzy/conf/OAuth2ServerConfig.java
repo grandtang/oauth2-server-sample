@@ -54,11 +54,9 @@ public class OAuth2ServerConfig {
         public void configure(HttpSecurity http) throws Exception {
             http
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                    .and().requestMatchers()
-                    .antMatchers("/api/**")
-                    .and()
+                    .and().formLogin().and()
                     .authorizeRequests()
-                    .antMatchers("/api/**")
+                    .antMatchers("/**")
                     .authenticated()
                     .and().csrf().disable();
         }
@@ -80,12 +78,20 @@ public class OAuth2ServerConfig {
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            clients.inMemory().withClient("tonr")
+            clients.inMemory()
+                    .withClient("tonr")
                     .resourceIds(SPARKLR_RESOURCE_ID)
                     .authorizedGrantTypes("password", "refresh_token", "client_credentials")
                     .authorities("ROLE_USER")
                     .scopes("read", "write")
-                    .secret("secret");
+                    .secret("secret")
+                    .and()
+                    .withClient("tonr2")
+                    .resourceIds(SPARKLR_RESOURCE_ID)
+                    .authorizedGrantTypes("authorization_code", "refresh_token")
+                    .authorities("ROLE_USER")
+                    .scopes("read", "write")
+                    .secret("secret").redirectUris("http://localhost:8181/client/login").autoApprove(true);
 
         }
 

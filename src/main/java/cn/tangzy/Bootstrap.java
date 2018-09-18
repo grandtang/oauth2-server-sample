@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+
 /**
  * Hello world!
  */
@@ -26,5 +28,11 @@ public class Bootstrap {
     @RequestMapping("/api/hello")
     public String testApi() {
         return "/api/hello";
+    }
+
+    @ResponseBody
+    @RequestMapping("/user")
+    public Principal getUser(Principal principal) {
+        return principal;
     }
 }
