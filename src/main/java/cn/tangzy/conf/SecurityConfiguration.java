@@ -3,17 +3,18 @@ package cn.tangzy.conf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
+//@Order(1)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -32,24 +33,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
 //        http
-//                .formLogin().and()
 //                .authorizeRequests()
-//                .antMatchers("/oauth/check_token", "/oauth/token").permitAll()
+//                .antMatchers("/**").authenticated()
+//                .antMatchers("/api/**").permitAll()
 //                .and()
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
+//                .formLogin().loginPage("/login").permitAll()
 //                .and().csrf().disable();
+//
+//    }
 
-        http.formLogin().and().authorizeRequests()
-                .anyRequest().authenticated().and().httpBasic().disable().csrf().disable();
-    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**/favicon.ico");
+        web.ignoring().antMatchers("/**/favicon.ico", "/static/**", "/Wopop_files/**");
         super.configure(web);
     }
 }

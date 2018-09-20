@@ -31,8 +31,13 @@ public class Bootstrap {
     }
 
     @ResponseBody
-    @RequestMapping("/user")
+    @RequestMapping("/api/user")
     public Principal getUser(Principal principal) {
         return principal;
+    }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "redirect:/static/login1.html";
     }
 }

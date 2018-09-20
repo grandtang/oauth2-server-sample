@@ -52,13 +52,18 @@ public class OAuth2ServerConfig {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                    .and().formLogin().and()
+
+            http    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .and()
                     .authorizeRequests()
                     .antMatchers("/**")
                     .authenticated()
-                    .and().csrf().disable();
+//                    .antMatchers("/api/**")
+//                    .authenticated()
+                    .and().csrf().disable()
+                    .formLogin().loginPage("/login").permitAll()
+
+            ;
         }
 
     }
