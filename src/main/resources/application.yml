@@ -1,0 +1,10 @@
+server:
+  port: 8043
+  servlet:
+    context-path: /uaa
+logging:
+  level:
+    org.springframework.security: DEBUG
+spring:
+  application:
+    name: oauth-server
